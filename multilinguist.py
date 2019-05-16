@@ -1,5 +1,6 @@
 import requests
 import json
+import random
 
 class Multilinguist:
   """This class represents a world traveller who knows 
@@ -77,4 +78,55 @@ class Multilinguist:
     response = requests.get(self.translatr_base_url, params=params)
     json_response = json.loads(response.text)
     return json_response['translationText']
+  
+class MathGenius(Multilinguist):
+
+  def report_total(self, numbers = 0):
+    total = 0
+    total = sum(numbers)
+    return f"{self.say_in_local_language('The total is')} {total}"
+
+
+class QuoteCollector(Multilinguist):
+
+  collection = []
+
+  def fav_quotes(self, add_quote):
+    QuoteCollector.collection.append(add_quote)
+    return add_quote
+
+  def random(self):
+    quotes = random.choice(QuoteCollector().collection)
+    return self.say_in_local_language(quotes)
+
+
+# france = Multilinguist()
+# china = Multilinguist()
+# germany = Multilinguist()
+
+# print(france.language_in('France'))
+# print()
+
+# print(germany.travel_to('Germany'))
+# print(germany.say_in_local_language('Hi! how are you'))
+# print()
+# print(china.language_in('China'))
+# china.travel_to('China')
+# print(china.current_lang)
+
+me = MathGenius()
+my = QuoteCollector()
+my.fav_quotes("Time isn't the main thing. It's only the thing")
+my.fav_quotes("To travel is to")
+
+print(me.report_total([23,45,676,34,5778,4,23,5465])) # The total is 12048
+me.travel_to("India")
+my.fav_quotes('Learn from yesterday, Live for Today, Hope for Tomorrow')
+print(me.report_total([6,3,6,68,455,4,467,57,4,534])) # है को कुल 1604
+print(my.fav_quotes)
+me.travel_to("Italy")
+print(me.report_total([324,245,6,343647,686545])) # È Il totale 1030767
+print(my.random())
+
+
 
